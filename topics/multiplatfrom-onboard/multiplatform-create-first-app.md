@@ -123,7 +123,7 @@ and generates a single declaration with actual implementations.
    It's a common `Platform` interface with information about the platform.
 2. Switch between the `androidMain` and the `iosMain` modules.
    You'll see that they have different implementations of the same functionality for the Android and the iOS source sets:
-    
+
     ```kotlin
     // Platform.android.kt in the androidMain module:    
     class AndroidPlatform: Platform {
@@ -131,7 +131,7 @@ and generates a single declaration with actual implementations.
             "Android ${android.os.Build.VERSION.SDK_INT}"
     }
     ```
-   
+
     ```kotlin
     // Platform.ios.kt in the iosMain module:
     import platform.UIKit.UIDevice
@@ -142,11 +142,11 @@ and generates a single declaration with actual implementations.
     }
     ```
 
-    * The `name` property implementation from `AndroidPlatform` uses the Android platform code, namely the `android.os.Build`
-      dependency. This code is written in Kotlin/JVM. If you try to access `java.util.Random` here, this code will compile.
-    * The `name` property implementation from `IOSPlatform` uses iOS platform code, namely the `platform.UIKit.UIDevice`
-      dependency. It's written in Kotlin/Native, meaning you can write iOS code in Kotlin. This code becomes a part of the iOS
-      framework, which you will later call from Swift in your iOS application.
+   * The `name` property implementation from `AndroidPlatform` uses the Android platform code, namely the `android.os.Build`
+     dependency. This code is written in Kotlin/JVM. If you try to access `java.util.Random` here, this code will compile.
+   * The `name` property implementation from `IOSPlatform` uses iOS platform code, namely the `platform.UIKit.UIDevice`
+     dependency. It's written in Kotlin/Native, meaning you can write iOS code in Kotlin. This code becomes a part of the iOS
+     framework, which you will later call from Swift in your iOS application.
 
 3. Check the `getPlatform()` function in different source sets. Its expected declaration doesn't have a body,
    and actual implementations are provided in the platform code:
@@ -155,12 +155,12 @@ and generates a single declaration with actual implementations.
     // Platform.kt in the commonMain module:
     expect fun getPlatform(): Platform
     ```
-   
+
     ```kotlin
     // Platform.android.kt in the androidMain module:
     actual fun getPlatform(): Platform = AndroidPlatform()
     ```
-   
+
     ```kotlin
     // Platform.ios.kt in the iosMain module:
     actual fun getPlatform(): Platform = IOSPlatform()
